@@ -8,7 +8,7 @@ from teachers.models import Teacher
 
 
 class Command(BaseCommand):
-    help = 'Create random teachers'
+    help = 'Create random teachers'  # noqa
 
     def add_arguments(self, parser):
         parser.add_argument('count', type=int, nargs='?', default=10)
