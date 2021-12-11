@@ -1,9 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render  # noqa
+from django.views.decorators.csrf import csrf_exempt
 
 from webargs import fields
 from webargs.djangoparser import use_args
 
+from .forms import GroupCreateForm
 from .models import Group
 from .utils import format_records
 
@@ -43,3 +45,26 @@ def get_groups(requests, args):
     response = html_form + records
 
     return HttpResponse(response)
+
+
+@csrf_exempt
+def create_group(request):
+
+    if request.method == 'GET':
+        form = GroupCreateForm()
+    elif request.method == 'POST':
+        form = GroupCreateForm(data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/groups/')
+
+    html_form = f"""
+            <form method="post">
+                {form.as_p()}
+
+                <input type="submit" value="Submit">
+            </form>
+            """
+
+    return HttpResponse(html_form)
