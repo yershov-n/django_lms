@@ -1,13 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render  # noqa
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from webargs import fields
 from webargs.djangoparser import use_args
 
 from .forms import GroupCreateForm
 from .models import Group
-from .utils import format_records
 
 
 @use_args(
@@ -18,36 +16,20 @@ from .utils import format_records
     },
     location='query'
 )
-def get_groups(requests, args):
+def get_groups(request, args):
     groups = Group.objects.all()
 
     for key, value in args.items():
         if value:
             groups = groups.filter(**{key: value})
 
-    html_form = """
-        <form method="get">
-            <label for="fname">Group name:</label>
-            <input type="text" id="fname" name="group_name"></br><br>
-
-            <label for="lname">Course:</label>
-            <input type="text" id="lname" name="course"></br><br>
-
-            <label for="age">Group size:</label>
-            <input type="number" name="group_size"></br><br>
-
-            <input type="submit" value="Submit">
-        </form>
-        """
-
-    records = format_records(groups)
-
-    response = html_form + records
-
-    return HttpResponse(response)
+    return render(
+        request=request,
+        template_name='groups/list.html',
+        context={'groups': groups}
+    )
 
 
-@csrf_exempt
 def create_group(request):
 
     if request.method == 'GET':
@@ -59,12 +41,26 @@ def create_group(request):
             form.save()
             return HttpResponseRedirect('/groups/')
 
-    html_form = f"""
-            <form method="post">
-                {form.as_p()}
+    return render(
+        request=request,
+        template_name='groups/create.html',
+        context={'form': form}
+    )
 
-                <input type="submit" value="Submit">
-            </form>
-            """
 
-    return HttpResponse(html_form)
+def update_group(request, pk):
+    group = Group.objects.get(id=pk)
+    if request.method == 'GET':
+        form = GroupCreateForm(instance=group)
+    elif request.method == 'POST':
+        form = GroupCreateForm(data=request.POST, instance=group)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/groups/')
+
+    return render(
+        request=request,
+        template_name='groups/update.html',
+        context={'form': form}
+    )

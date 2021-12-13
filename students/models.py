@@ -7,7 +7,8 @@ from django.db import models
 
 from faker import Faker
 
-from .validators import adult_validator
+# from .validators import adult_validator
+from .validators import AdultValidator
 from .validators import unique_number_validator
 
 
@@ -23,7 +24,8 @@ class Students(models.Model):
     age = models.IntegerField()
     birthday = models.DateField(
         default=datetime.date.today,
-        validators=[adult_validator]
+        # validators=[adult_validator]
+        validators=[AdultValidator(20)]
     )
     phone_number = models.CharField(
         max_length=20,
@@ -35,7 +37,7 @@ class Students(models.Model):
     )
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} - {self.age}'
+        return f'{self.first_name} {self.last_name} - {self.age} - {self.phone_number}'
 
     def save(self, *args, **kwargs):
         self.age = relativedelta(datetime.date.today(), self.birthday).years

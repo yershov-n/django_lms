@@ -27,4 +27,4 @@ class Teacher(models.Model):
     )
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.num_of_courses} courses)'
+        return f'{self.first_name} {self.last_name} ({self.num_of_courses} courses) - {self.phone_number}'

@@ -1,0 +1,24 @@
+{% extends 'teachers/base.html' %}
+
+{% block title %}
+    Teachers list
+{% endblock %}
+
+{% block content %}
+    <form method="get">
+        <label for="fname">First name:</label>
+            <input type="text" id="fname" name="first_name"><br><br>
+
+            <label for="lname">Last name:</label>
+            <input type="text" id="lname" name="last_name"><br><br>
+
+            <label for="num_of_courses">Number of courses:</label>
+            <input type="number" name="num_of_courses"><br><br>
+
+            <input type="submit" value="Submit">
+    </form>
+
+    {% for teacher in teachers %}
+        <a href="update/{{teacher.id}}/">Edit</a>&nbsp;&nbsp;{{ teacher }}<br>
+    {% endfor %}
+{% endblock %}
