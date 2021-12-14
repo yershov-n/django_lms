@@ -1,9 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render  # noqa
+from django.views.decorators.csrf import csrf_exempt
 
 from webargs import fields
 from webargs.djangoparser import use_args
 
+from .forms import TeacherCreateForm
 from .models import Teacher
 from .utils import format_records
 
@@ -43,3 +45,26 @@ def get_teachers(requests, args):
     response = html_form + records
 
     return HttpResponse(response)
+
+
+@csrf_exempt
+def create_teacher(request):
+
+    if request.method == 'GET':
+        form = TeacherCreateForm()
+    elif request.method == 'POST':
+        form = TeacherCreateForm(data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teachers/')
+
+    html_form = f"""
+            <form method="post">
+                {form.as_p()}
+
+                <input type="submit" value="Submit">
+            </form>
+            """
+
+    return HttpResponse(html_form)

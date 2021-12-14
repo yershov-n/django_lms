@@ -1,11 +1,13 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render  # noqa
+from django.views.decorators.csrf import csrf_exempt
 
 from faker import Faker
 
 from webargs import fields
 from webargs.djangoparser import use_args, use_kwargs
 
+from .forms import StudentCreateForm
 from .models import Students
 from .utils import format_records
 
@@ -70,3 +72,26 @@ def get_students(requests, args):
     response = html_form + records
 
     return HttpResponse(response)
+
+
+@csrf_exempt
+def create_student(request):
+
+    if request.method == 'GET':
+        form = StudentCreateForm()
+    elif request.method == 'POST':
+        form = StudentCreateForm(data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/students/')
+
+    html_form = f"""
+            <form method="post">
+                {form.as_p()}
+
+                <input type="submit" value="Submit">
+            </form>
+            """
+
+    return HttpResponse(html_form)
