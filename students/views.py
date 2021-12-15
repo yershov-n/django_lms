@@ -1,5 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt  # noqa
 
 from faker import Faker
@@ -9,14 +11,7 @@ from webargs.djangoparser import use_args, use_kwargs
 
 from .forms import StudentCreateForm
 from .models import Students
-from .utils import format_records  # noqa
-
-
-def index(request):
-    return render(
-        request=request,
-        template_name='students/index.html'
-    )
+# from .utils import format_records
 
 
 @use_kwargs(
@@ -92,7 +87,7 @@ def create_student(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect(reverse('students:list'))
 
     # html_form = f"""
     #         <form method="post">
@@ -119,10 +114,16 @@ def update_student(request, pk):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect(reverse('students:list'))
 
-    return render(
-        request=request,
-        template_name='students/update.html',
-        context={'form': form}
-    )
+    return render(request, 'students/update.html', {'form': form})
+
+
+def delete_student(request, pk):
+    student = get_object_or_404(Students, id=pk)
+    if request.method == 'POST':
+        student.delete()
+        return HttpResponseRedirect(reverse('students:list'))
+
+    return render(request, 'students/delete.html', {'student': student})
+

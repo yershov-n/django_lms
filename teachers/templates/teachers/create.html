@@ -1,7 +1,12 @@
-{% extends 'teachers/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Create teacher
+{% endblock %}
+
+{% block pages %}
+    <td><a href="{% url 'teachers:list' %}">List teachers</a></td>
+    <td><a href="{% url 'teachers:create' %}">Create teachers</a></td>
 {% endblock %}
 
 {% block content %}
@@ -9,5 +14,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Create">
+        <a href="{% url 'teachers:list' %}">Cancel</a>
     </form>
 {% endblock %}

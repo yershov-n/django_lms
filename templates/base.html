@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>LMS - {% block title %}{% endblock %}</title>
+    <style>{% block custom_css %}{% endblock %}</style>
 </head>
 <body>
     <table>
         <tr>
             <td><a href="/">Home</a></td>
-            <td><a href="/groups/">List groups</a></td>
-            <td><a href="/groups/create/">Create group</a></td>
+            {% block pages %}
+
+            {% endblock %}
         </tr>
     </table>
     <br><br>

@@ -1,7 +1,12 @@
-{% extends 'groups/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Create group
+{% endblock %}
+
+{% block pages %}
+    <td><a href="{% url 'groups:list' %}">List groups</a></td>
+    <td><a href="{% url 'groups:create' %}">Create group</a></td>
 {% endblock %}
 
 {% block content %}
@@ -9,5 +14,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Create">
+        <a href="{% url 'groups:list' %}">Cancel</a>
     </form>
 {% endblock %}

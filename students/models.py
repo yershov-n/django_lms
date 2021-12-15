@@ -7,8 +7,9 @@ from django.db import models
 
 from faker import Faker
 
-# from .validators import adult_validator
-from .validators import AdultValidator
+# from core.validators import adult_validator
+from core.validators import AdultValidator
+
 from .validators import unique_number_validator
 
 
