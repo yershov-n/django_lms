@@ -7,6 +7,7 @@ from webargs import fields
 from webargs.djangoparser import use_args
 
 from .forms import GroupCreateForm
+from .forms import GroupsFilter
 from .models import Group
 
 
@@ -25,10 +26,15 @@ def get_groups(request, args):
         if value:
             groups = groups.filter(**{key: value})
 
+    filter_groups = GroupsFilter(data=request.GET, queryset=groups)
+
     return render(
         request=request,
         template_name='groups/list.html',
-        context={'groups': groups}
+        context={
+            'groups': groups,
+            'filter_groups': filter_groups
+        }
     )
 
 

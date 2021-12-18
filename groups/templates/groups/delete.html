@@ -4,16 +4,11 @@
   Delete group
 {% endblock %}
 
-{% block pages %}
-    <td><a href="{% url 'groups:list' %}">List groups</a></td>
-    <td><a href="{% url 'groups:create' %}">Create group</a></td>
-{% endblock %}
-
 {% block content %}
   <form method="post">
     {% csrf_token %}
     <p>Do you really remove {{ group.group_name }} {{ group.start_date }}</p>
-    <input type="submit" value="Agree">
-    <a href="{% url 'groups:list' %}">Cancel</a>
+    <input class="btn btn-outline-danger" type="submit" value="Agree">
+    <a class="btn btn-outline-primary" href="{% url 'groups:list' %}">Cancel</a>
   </form>
 {% endblock %}

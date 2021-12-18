@@ -1,4 +1,5 @@
 from django import forms
+from django_filters import FilterSet
 
 from .models import Teacher
 
@@ -37,3 +38,13 @@ class TeacherCreateForm(forms.ModelForm):
             if char.isdigit():
                 clean_phone_number += char
         return clean_phone_number
+
+
+class TeachersFilter(FilterSet):
+    class Meta:
+        model = Teacher
+        fields = {
+            'num_of_courses': ['lt', 'gt'],
+            'first_name': ['exact', 'icontains'],
+            'last_name': ['exact', 'icontains']
+        }

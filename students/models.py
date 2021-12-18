@@ -36,6 +36,8 @@ class Students(models.Model):
             unique_number_validator
         ]
     )
+    enroll_date = models.DateField(default=datetime.date.today)
+    graduate_date = models.DateField(default=datetime.date.today)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} - {self.age} - {self.phone_number}'

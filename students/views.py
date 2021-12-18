@@ -10,6 +10,7 @@ from webargs import fields
 from webargs.djangoparser import use_args, use_kwargs
 
 from .forms import StudentCreateForm
+from .forms import StudentsFilter
 from .models import Students
 # from .utils import format_records
 
@@ -70,10 +71,16 @@ def get_students(request, args):
     # response = html_form + records
 
     # return HttpResponse(response)
+
+    filter_students = StudentsFilter(data=request.GET, queryset=students)
+
     return render(
         request=request,
         template_name='students/list.html',
-        context={'students': students}
+        context={
+            'students': students,
+            'filter_students': filter_students
+        }
     )
 
 

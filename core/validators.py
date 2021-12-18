@@ -1,6 +1,7 @@
 import datetime
 
 from django.core.exceptions import ValidationError
+from django.utils.deconstruct import deconstructible
 
 ADULT_AGE_LIMIT = 18
 
@@ -11,6 +12,7 @@ def adult_validator(birthday, age_limit=18):
         raise ValidationError(f'Age should be greater than {age_limit} y.o.')
 
 
+@deconstructible
 class AdultValidator:
     def __init__(self, age_limit):
         self.age_limit = age_limit
@@ -21,3 +23,10 @@ class AdultValidator:
         age = datetime.date.today().year - args[0].year
         if age < self.age_limit:
             raise ValidationError(f'Age should be greater than {self.age_limit} y.o.')
+
+    # A == B
+    def __eq__(self, other):
+        return (
+            isinstance(other, self.__class__) and
+            self.age_limit == other.age_limit
+        )
