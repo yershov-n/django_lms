@@ -1,7 +1,30 @@
-{% extends 'groups/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}
     Groups list
+{% endblock %}
+
+{% block custom_css %}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+{% endblock %}
+
+{% block pages %}
+    <td><a href="{% url 'groups:list' %}">List groups</a></td>
+    <td><a href="{% url 'groups:create' %}">Create group</a></td>
 {% endblock %}
 
 {% block content %}
@@ -17,8 +40,28 @@
 
             <input type="submit" value="Submit">
     </form>
+    <p><strong>Count of groups: {{ groups.count }}</strong></p>
+    <table>
+        <tr>
+            <th></th>
+            <th>Group name</th>
+            <th>Course</th>
+            <th>Group size</th>
+            <th>Start date</th>
+            <th>✐</th>
+            <th>🗑</th>
+        </tr>
 
     {% for group in groups %}
-        <a href="update/{{group.id}}/">Edit</a>&nbsp;&nbsp;{{ group }}<br>
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ group.group_name }}</td>
+            <td>{{ group.course }}</td>
+            <td>{{ group.group_size }}</td>
+            <td>{{ group.start_date }}</td>
+            <td><a href="{% url 'groups:update' group.id %}">Edit</a></td>
+            <td><a href="{% url 'groups:delete' group.id %}">Delete</a></td>
+        </tr>
     {% endfor %}
+    </table>
 {% endblock %}
