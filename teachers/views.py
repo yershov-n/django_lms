@@ -7,6 +7,7 @@ from webargs import fields
 from webargs.djangoparser import use_args
 
 from .forms import TeacherCreateForm
+from .forms import TeachersFilter
 from .models import Teacher
 
 
@@ -25,10 +26,15 @@ def get_teachers(request, args):
         if value:
             teachers = teachers.filter(**{key: value})
 
+    filter_teachers = TeachersFilter(data=request.GET, queryset=teachers)
+
     return render(
         request=request,
         template_name='teachers/list.html',
-        context={'teachers': teachers}
+        context={
+            'teachers': teachers,
+            'filter_teachers': filter_teachers
+        }
     )
 
 

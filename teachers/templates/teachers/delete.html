@@ -4,16 +4,11 @@
   Delete teacher
 {% endblock %}
 
-{% block pages %}
-    <td><a href="{% url 'teachers:list' %}">List teachers</a></td>
-    <td><a href="{% url 'teachers:create' %}">Create teachers</a></td>
-{% endblock %}
-
 {% block content %}
   <form method="post">
     {% csrf_token %}
     <p>Do you really remove {{ teacher.last_name }} {{ teacher.first_name }}</p>
-    <input type="submit" value="Agree">
-    <a href="{% url 'teachers:list' %}">Cancel</a>
+    <input class="btn btn-outline-danger" type="submit" value="Agree">
+    <a class="btn btn-outline-primary" href="{% url 'teachers:list' %}">Cancel</a>
   </form>
 {% endblock %}
