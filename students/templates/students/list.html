@@ -61,31 +61,38 @@
     </div>
 <!--    <p><strong>Count of students: {{ students.count }}</strong></p>-->
     <p class="mt-2"><strong>Count of students: {{ filter_students.qs.count }}</strong></p>
-    <table class="table table-striped table-hover">
-        <tr>
-            <th></th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Age</th>
-            <th><i class="bi bi-telephone"></i></th>
-            <th>Enroll date</th>
-            <th>Graduate date</th>
-            <th><i class="bi bi-pencil"></i></th>
-            <th><i class="bi bi-trash"></i></th>
-        </tr>
+<!--    <table class="table table-striped table-hover">-->
+<!--        <tr>-->
+<!--            <th></th>-->
+<!--            <th>First name</th>-->
+<!--            <th>Last name</th>-->
+<!--            <th>Age</th>-->
+<!--            <th><i class="bi bi-telephone"></i></th>-->
+<!--            <th>Enroll date</th>-->
+<!--            <th>Graduate date</th>-->
+<!--            <th>Group</th>-->
+<!--            <th><i class="bi bi-pencil"></i></th>-->
+<!--            <th><i class="bi bi-trash"></i></th>-->
+<!--        </tr>-->
 
-    {% for student in filter_students.qs %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ student.first_name }}</td>
-            <td>{{ student.last_name }}</td>
-            <td>{{ student.age }}</td>
-            <td>{{ student.phone_number }}</td>
-            <td>{{ student.enroll_date }}</td>
-            <td>{{ student.graduate_date }}</td>
-            <td><a href="{% url 'students:update' student.id %}">Edit</a></td>
-            <td><a href="{% url 'students:delete' student.id %}">Delete</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+<!--    {% for student in filter_students.qs %}-->
+<!--        <tr>-->
+<!--            <td>{{ forloop.counter }}</td>-->
+<!--            <td>{{ student.first_name }}</td>-->
+<!--            <td>{{ student.last_name }}</td>-->
+<!--            <td>{{ student.age }}</td>-->
+<!--            <td>{{ student.phone_number }}</td>-->
+<!--            <td>{{ student.enroll_date }}</td>-->
+<!--            <td>{{ student.graduate_date }}</td>-->
+<!--            <td>{% if student.group is not None %}-->
+<!--                {{ student.group }}-->
+<!--            {% endif %}</td>-->
+<!--            <td><a href="{% url 'students:update' student.id %}">Edit</a></td>-->
+<!--            <td><a href="{% url 'students:delete' student.id %}">Delete</a></td>-->
+<!--        </tr>-->
+<!--    {% endfor %}-->
+<!--    </table>-->
+    {% with list_object=filter_students.qs %}
+        {% include 'includes/students_list_table.html' %}
+    {% endwith %}
 {% endblock %}

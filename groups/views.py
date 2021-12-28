@@ -57,7 +57,7 @@ def create_group(request):
 
 
 def update_group(request, pk):
-    group = Group.objects.get(id=pk)
+    group = get_object_or_404(Group, id=pk)
     if request.method == 'GET':
         form = GroupCreateForm(instance=group)
     elif request.method == 'POST':
@@ -70,7 +70,10 @@ def update_group(request, pk):
     return render(
         request=request,
         template_name='groups/update.html',
-        context={'form': form}
+        context={
+            'form': form,
+            'group': group
+        }
     )
 
 

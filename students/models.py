@@ -12,6 +12,8 @@ from core.validators import AdultValidator
 
 from .validators import unique_number_validator
 
+from groups.models import Group
+
 
 class Students(models.Model):
     first_name = models.CharField(
@@ -38,6 +40,12 @@ class Students(models.Model):
     )
     enroll_date = models.DateField(default=datetime.date.today)
     graduate_date = models.DateField(default=datetime.date.today)
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='students'
+    )
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} - {self.age} - {self.phone_number}'

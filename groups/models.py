@@ -17,4 +17,4 @@ class Group(models.Model):
     start_date = models.DateField(default=datetime.date.today)
 
     def __str__(self):
-        return f'{self.group_name} ({self.course}) - {self.group_size} students'
+        return self.group_name
