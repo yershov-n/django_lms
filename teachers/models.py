@@ -5,6 +5,8 @@ from django.db import models
 
 from .validators import unique_number_validator
 
+from groups.models import Group
+
 
 class Teacher(models.Model):
     first_name = models.CharField(
@@ -24,6 +26,12 @@ class Teacher(models.Model):
             MinLengthValidator(7),
             unique_number_validator
         ]
+    )
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='teachers'
     )
 
     def __str__(self):

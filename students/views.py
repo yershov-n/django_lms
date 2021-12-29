@@ -113,7 +113,7 @@ def create_student(request):
 
 
 def update_student(request, pk):
-    student = Students.objects.get(id=pk)
+    student = get_object_or_404(Students, id=pk)
     if request.method == 'GET':
         form = StudentCreateForm(instance=student)
     elif request.method == 'POST':

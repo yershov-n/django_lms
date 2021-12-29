@@ -57,7 +57,7 @@ def create_teacher(request):
 
 
 def update_teacher(request, pk):
-    teacher = Teacher.objects.get(id=pk)
+    teacher = get_object_or_404(Teacher, id=pk)
     if request.method == 'GET':
         form = TeacherCreateForm(instance=teacher)
     elif request.method == 'POST':

@@ -12,7 +12,8 @@ class StudentCreateForm(forms.ModelForm):
             'last_name',
             # 'age',
             'birthday',
-            'phone_number'
+            'phone_number',
+            'group'
         ]
         # fields = '__all__'
 

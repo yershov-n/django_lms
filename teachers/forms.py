@@ -12,7 +12,8 @@ class TeacherCreateForm(forms.ModelForm):
             'last_name',
             'num_of_courses',
             'employment_date',
-            'phone_number'
+            'phone_number',
+            'group'
         ]
 
         widgets = {
