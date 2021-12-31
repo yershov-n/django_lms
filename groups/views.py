@@ -72,7 +72,9 @@ def update_group(request, pk):
         template_name='groups/update.html',
         context={
             'form': form,
-            'group': group
+            'group': group,
+            'students': group.students.prefetch_related('headman_group'),
+            'teachers': group.teachers_gr.prefetch_related('group'),
         }
     )
 

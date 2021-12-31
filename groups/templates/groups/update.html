@@ -41,12 +41,12 @@
 <!--    </table>-->
     <br>
     <h3>Teachers:</h3>
-    {% with list_object=group.teachers.all %}
+    {% with list_object=teachers %}
         {% include 'includes/teachers_list_table.html' %}
     {% endwith %}
     <br>
     <h3>Students:</h3>
-    {% with list_object=group.students.all %}
+    {% with list_object=students %}
         {% include 'includes/students_list_table.html' %}
     {% endwith %}
 {% endblock %}

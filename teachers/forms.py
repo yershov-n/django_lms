@@ -7,14 +7,7 @@ from .models import Teacher
 class TeacherCreateForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = [
-            'first_name',
-            'last_name',
-            'num_of_courses',
-            'employment_date',
-            'phone_number',
-            'group'
-        ]
+        fields = '__all__'
 
         widgets = {
             'employment_date': forms.DateInput(attrs={'type': 'date'})

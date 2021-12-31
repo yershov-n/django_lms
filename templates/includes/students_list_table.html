@@ -8,6 +8,7 @@
         <th>Enroll date</th>
         <th>Graduate date</th>
         <th>Group</th>
+        <th>Head man</th>
         <th><i class="bi bi-pencil"></i></th>
         <th><i class="bi bi-trash"></i></th>
     </tr>
@@ -24,6 +25,7 @@
             <td>{% if student.group is not None %}
                 {{ student.group }}
             {% endif %}</td>
+            <td>{% if student.headman_group %}<i class="bi bi-check-lg"></i>{% endif %}</td>
             <td><a href="{% url 'students:update' student.id %}">Edit</a></td>
             <td><a href="{% url 'students:delete' student.id %}">Delete</a></td>
         </tr>

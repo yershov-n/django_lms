@@ -1,23 +1,19 @@
 import datetime
+import random
 
 from django.core.validators import MinLengthValidator
 from django.db import models
 
+from core.models import Person
 from .validators import unique_number_validator
 
 from groups.models import Group
 
 
-class Teacher(models.Model):
-    first_name = models.CharField(
-        max_length=100,
-        validators=[MinLengthValidator(2)]
+class Teacher(Person):
+    num_of_courses = models.IntegerField(
+        null=True
     )
-    last_name = models.CharField(
-        max_length=100,
-        validators=[MinLengthValidator(2)]
-    )
-    num_of_courses = models.IntegerField()
     employment_date = models.DateField(default=datetime.date.today)
     phone_number = models.CharField(
         max_length=20,
@@ -27,6 +23,7 @@ class Teacher(models.Model):
             unique_number_validator
         ]
     )
+    salary = models.PositiveIntegerField(default=1500)
     group = models.ForeignKey(
         Group,
         on_delete=models.SET_NULL,
@@ -34,5 +31,8 @@ class Teacher(models.Model):
         related_name='teachers'
     )
 
-    def __str__(self):
-        return f'{self.first_name} {self.last_name} ({self.num_of_courses} courses) - {self.phone_number}'
+    @classmethod
+    def _generate(cls):
+        teacher = super()._generate()
+        teacher.salary = random.randint(10000, 99999)
+        teacher.save()
