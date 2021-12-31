@@ -27,5 +27,5 @@ class GroupsFilter(FilterSet):
         fields = {
             'group_size': ['lt', 'gt'],
             'group_name': ['exact', 'icontains'],
-            'course': ['exact', 'icontains']
+            'course': ['exact']
         }

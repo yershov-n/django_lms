@@ -20,11 +20,7 @@ from .models import Group
     location='query'
 )
 def get_groups(request, args):
-    groups = Group.objects.all()
-
-    for key, value in args.items():
-        if value:
-            groups = groups.filter(**{key: value})
+    groups = Group.objects.all().select_related('course')
 
     filter_groups = GroupsFilter(data=request.GET, queryset=groups)
 

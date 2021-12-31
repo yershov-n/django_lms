@@ -12,9 +12,11 @@ class Group(models.Model):
         max_length=100,
         validators=[MinLengthValidator(2)]
     )
-    course = models.CharField(
-        max_length=100,
-        validators=[MinLengthValidator(2)]
+    course = models.OneToOneField(
+        'courses.Course',
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='course'
     )
     group_size = models.IntegerField()
     start_date = models.DateField(default=datetime.date.today)
