@@ -25,4 +25,5 @@ urlpatterns = [
     path('students/', include('students.urls')),
     path('groups/', include('groups.urls')),
     path('teachers/', include('teachers.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]

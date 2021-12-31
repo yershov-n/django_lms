@@ -5,7 +5,7 @@
         <th>Last name</th>
         <th>Number of courses</th>
         <th><i class="bi bi-telephone"></i></th>
-        <th>Group</th>
+<!--        <th>Group</th>-->
         <th><i class="bi bi-pencil"></i></th>
         <th><i class="bi bi-trash"></i></th>
     </tr>
@@ -17,9 +17,9 @@
             <td>{{ teacher.last_name }}</td>
             <td>{{ teacher.num_of_courses }}</td>
             <td>{{ teacher.phone_number }}</td>
-            <td>{% if teacher.group is not None %}
-                {{ teacher.group }}
-            {% endif %}</td>
+<!--            <td>{% if teacher.group is not None %}-->
+<!--                {{ teacher.group }}-->
+<!--            {% endif %}</td>-->
             <td><a href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
             <td><a href="{% url 'teachers:delete' teacher.id %}">Delete</a></td>
         </tr>
