@@ -10,7 +10,7 @@ from faker import Faker
 
 # from core.validators import adult_validator
 from core.models import Person
-from core.validators import AdultValidator
+from core.validators import AdultValidator  # noqa
 
 from .validators import unique_number_validator
 
