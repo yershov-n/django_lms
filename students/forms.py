@@ -1,21 +1,15 @@
 from django import forms
+from django.forms import ModelForm
+
 from django_filters import FilterSet
 
 from .models import Students
 
 
-class StudentCreateForm(forms.ModelForm):
+class StudentBaseForm(ModelForm):
     class Meta:
         model = Students
-        fields = [
-            'first_name',
-            'last_name',
-            # 'age',
-            'birthday',
-            'phone_number',
-            'group'
-        ]
-        # fields = '__all__'
+        fields = '__all__'
 
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'})
@@ -40,6 +34,16 @@ class StudentCreateForm(forms.ModelForm):
             if char.isdigit():
                 clean_phone_number += char
         return clean_phone_number
+
+
+class StudentCreateForm(StudentBaseForm):
+    class Meta(StudentBaseForm.Meta):
+        exclude = ['age']
+
+
+class StudentUpdateForm(StudentBaseForm):
+    class Meta(StudentBaseForm.Meta):
+        exclude = ['age']
 
 
 class StudentsFilter(FilterSet):

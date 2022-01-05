@@ -1,10 +1,12 @@
 from django import forms
+from django.forms import ModelForm
+
 from django_filters import FilterSet
 
 from .models import Teacher
 
 
-class TeacherCreateForm(forms.ModelForm):
+class TeacherBaseForm(ModelForm):
     class Meta:
         model = Teacher
         fields = '__all__'
@@ -32,6 +34,16 @@ class TeacherCreateForm(forms.ModelForm):
             if char.isdigit():
                 clean_phone_number += char
         return clean_phone_number
+
+
+class TeacherCreateForm(TeacherBaseForm):
+    class Meta(TeacherBaseForm.Meta):
+        exclude = ['group']
+
+
+class TeacherUpdateForm(TeacherBaseForm):
+    class Meta(TeacherBaseForm.Meta):
+        exclude = ['group']
 
 
 class TeachersFilter(FilterSet):

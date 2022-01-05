@@ -1,20 +1,24 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect  # noqa
+from django.shortcuts import get_object_or_404  # noqa
+from django.shortcuts import render  # noqa
+from django.urls import reverse  # noqa
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt  # noqa
-from django.views.generic import UpdateView, ListView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from faker import Faker
 
 from webargs import fields
-from webargs.djangoparser import use_args, use_kwargs
+from webargs.djangoparser import use_args  # noqa
+from webargs.djangoparser import use_kwargs
 
-from core.views import UpdateBaseView
-from .forms import StudentCreateForm
+from core.views import UpdateBaseView  # noqa
+
+from .forms import StudentCreateForm, StudentUpdateForm
 from .forms import StudentsFilter
 from .models import Students
-# from .utils import format_records
+# from .utils import format_records  # noqa
 
 
 @use_kwargs(
@@ -87,31 +91,31 @@ def generate_students(request, count):
 
 
 # @csrf_exempt
-def create_student(request):
-
-    if request.method == 'GET':
-        form = StudentCreateForm()
-    elif request.method == 'POST':
-        form = StudentCreateForm(data=request.POST)
-
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('students:list'))
-
-    # html_form = f"""
-    #         <form method="post">
-    #             {form.as_p()}
-    #
-    #             <input type="submit" value="Create">
-    #         </form>
-    #         """
-
-    # return HttpResponse(html_form)
-    return render(
-        request=request,
-        template_name='students/create.html',
-        context={'form': form}
-    )
+# def create_student(request):
+#
+#     if request.method == 'GET':
+#         form = StudentCreateForm()
+#     elif request.method == 'POST':
+#         form = StudentCreateForm(data=request.POST)
+#
+#         if form.is_valid():
+#             form.save()
+#             return HttpResponseRedirect(reverse('students:list'))
+#
+#     # html_form = f"""
+#     #         <form method="post">
+#     #             {form.as_p()}
+#     #
+#     #             <input type="submit" value="Create">
+#     #         </form>
+#     #         """
+#
+#     # return HttpResponse(html_form)
+#     return render(
+#         request=request,
+#         template_name='students/create.html',
+#         context={'form': form}
+#     )
 
 
 # def update_student(request, pk):
@@ -135,25 +139,25 @@ def create_student(request):
 #     )
 
 
-def delete_student(request, pk):
-    student = get_object_or_404(Students, id=pk)
-    if request.method == 'POST':
-        student.delete()
-        return HttpResponseRedirect(reverse('students:list'))
+# def delete_student(request, pk):
+#     student = get_object_or_404(Students, id=pk)
+#     if request.method == 'POST':
+#         student.delete()
+#         return HttpResponseRedirect(reverse('students:list'))
+#
+#     return render(request, 'students/delete.html', {'student': student})
 
-    return render(request, 'students/delete.html', {'student': student})
 
-
-class UpdateStudentView(UpdateBaseView):
-    model = Students
-    form_class = StudentCreateForm
-    success_url = 'students:list'
-    template_name = 'students/update.html'
+# class UpdateStudentView(UpdateBaseView):
+#     model = Students
+#     form_class = StudentUpdateForm
+#     success_url = 'students:list'
+#     template_name = 'students/update.html'
 
 
 class StudentUpdateView(UpdateView):
     model = Students
-    form_class = StudentCreateForm
+    form_class = StudentUpdateForm
     success_url = reverse_lazy('students:list')
     template_name = 'students/update.html'
 
@@ -171,3 +175,16 @@ class StudentsListView(ListView):
         )
 
         return filter_students
+
+
+class StudentDeleteView(DeleteView):
+    model = Students
+    success_url = reverse_lazy('students:list')
+    template_name = 'students/delete.html'
+
+
+class StudentCreateView(CreateView):
+    model = Students
+    form_class = StudentCreateForm
+    success_url = reverse_lazy('students:list')
+    template_name = 'students/create.html'

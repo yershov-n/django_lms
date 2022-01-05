@@ -2,13 +2,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView, ListView, CreateView, DeleteView
-
-from webargs import fields
-from webargs.djangoparser import use_args
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from students.models import Students
-from .forms import GroupUpdateForm, GroupCreateForm
+
+from webargs import fields  # noqa
+from webargs.djangoparser import use_args  # noqa
+
+from .forms import GroupCreateForm, GroupUpdateForm
 from .forms import GroupsFilter
 from .models import Group
 
@@ -123,7 +124,7 @@ class GroupUpdateView(UpdateView):
         initial = super().get_initial()
         try:
             initial['headman_field'] = self.object.headman.id
-        except AttributeError as ex:
+        except AttributeError as ex:  # noqa
             pass
 
         return initial

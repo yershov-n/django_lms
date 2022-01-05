@@ -6,9 +6,9 @@ from django.urls import path
 # from .views import update_group
 
 from .views import GroupCreateView
+from .views import GroupDeleteView
 from .views import GroupListView
 from .views import GroupUpdateView
-from .views import GroupDeleteView
 
 app_name = 'groups'
 

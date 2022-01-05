@@ -1,9 +1,9 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from students.forms import StudentCreateForm
-from students.models import Students
+from students.forms import StudentCreateForm  # noqa
+from students.models import Students  # noqa
 
 
 def index(request):
