@@ -36,4 +36,4 @@ class TeacherCreateView(CreateView):
     model = Teacher
     form_class = TeacherCreateForm
     success_url = reverse_lazy('teachers:list')
-    template_name = 'teachers/update.html'
+    template_name = 'teachers/create.html'
