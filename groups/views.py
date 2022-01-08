@@ -131,7 +131,9 @@ class GroupUpdateView(UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        form.instance.headman = Students.objects.get(id=form.cleaned_data['headman_field'])
+        pk = form.cleaned_data['headman_field']
+        if pk:
+            form.instance.headman = Students.objects.get(id=form.cleaned_data['headman_field'])
         form.instance.save()
 
         return response
