@@ -1,13 +1,14 @@
 import datetime
 import random
 
+from core.models import Person
+
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from core.models import Person
-from .validators import unique_number_validator
-
 from groups.models import Group
+
+from .validators import unique_number_validator
 
 
 class Teacher(Person):

@@ -84,4 +84,3 @@ def delete_course(request, pk):
         return HttpResponseRedirect(reverse('courses:list'))
 
     return render(request, 'courses/delete.html', {'course': course})
-
