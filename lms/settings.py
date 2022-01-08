@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig',
     'core.apps.CoreConfig',
     'courses.apps.CoursesConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,5 @@ DATE_FORMAT = 'd-m-Y'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+EMAIL_PORT = 1025
