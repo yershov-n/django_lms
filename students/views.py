@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required  # noqa
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  # noqa
 from django.shortcuts import get_object_or_404  # noqa
@@ -23,6 +23,7 @@ from .models import Students
 # from .utils import format_records  # noqa
 
 
+@login_required
 @use_kwargs(
     {
         'count': fields.Int(
