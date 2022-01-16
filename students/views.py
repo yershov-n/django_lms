@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required  # noqa
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  # noqa
 from django.shortcuts import get_object_or_404  # noqa
@@ -6,6 +7,7 @@ from django.urls import reverse  # noqa
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt  # noqa
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from faker import Faker
 
@@ -138,7 +140,7 @@ def generate_students(request, count):
 #         }
 #     )
 
-
+# @login_required
 # def delete_student(request, pk):
 #     student = get_object_or_404(Students, id=pk)
 #     if request.method == 'POST':
@@ -155,7 +157,7 @@ def generate_students(request, count):
 #     template_name = 'students/update.html'
 
 
-class StudentUpdateView(UpdateView):
+class StudentUpdateView(LoginRequiredMixin, UpdateView):
     model = Students
     form_class = StudentUpdateForm
     success_url = reverse_lazy('students:list')
@@ -177,13 +179,13 @@ class StudentsListView(ListView):
         return filter_students
 
 
-class StudentDeleteView(DeleteView):
+class StudentDeleteView(LoginRequiredMixin, DeleteView):
     model = Students
     success_url = reverse_lazy('students:list')
     template_name = 'students/delete.html'
 
 
-class StudentCreateView(CreateView):
+class StudentCreateView(LoginRequiredMixin, CreateView):
     model = Students
     form_class = StudentCreateForm
     success_url = reverse_lazy('students:list')

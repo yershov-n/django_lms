@@ -22,10 +22,10 @@ class Students(Person):
     phone_number = models.CharField(
         max_length=20,
         default='',
-        validators=[
-            MinLengthValidator(7),
-            unique_number_validator
-        ]
+        # validators=[
+        #     MinLengthValidator(7),
+        #     unique_number_validator
+        # ]
     )
     enroll_date = models.DateField(default=datetime.date.today)
     graduate_date = models.DateField(default=datetime.date.today)
