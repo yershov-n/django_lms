@@ -212,9 +212,3 @@ class StudentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('students:list')
     template_name = 'students/create.html'
     success_message = 'Student %(first_name) has successfully created'
-
-    def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data,
-            first_name=self.object.first_name,
-        )
