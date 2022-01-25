@@ -19,6 +19,11 @@ class StudentsInlineTable(admin.TabularInline):
     # show_change_link = True
 
 
+class TeacherInlineTable(admin.TabularInline):
+    model = Group.teachers_gr.through
+    extra = 0
+
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = [
         'group_name',
@@ -33,7 +38,7 @@ class GroupAdmin(admin.ModelAdmin):
         'teachers_gr',
     ]
 
-    inlines = [StudentsInlineTable,]
+    inlines = [StudentsInlineTable, TeacherInlineTable]
 
 
 admin.site.register(Group, GroupAdmin)

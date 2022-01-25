@@ -35,8 +35,10 @@
             <th>Course</th>
             <th>Group size</th>
             <th>Start date</th>
-            <th><i class="bi bi-pencil"></i></th>
-            <th><i class="bi bi-trash"></i></th>
+            {% if user.is_authenticated %}
+                <th><i class="bi bi-pencil"></i></th>
+                <th><i class="bi bi-trash"></i></th>
+            {% endif %}
         </tr>
 
     {% for group in object_list.qs %}
@@ -46,8 +48,10 @@
             <td>{{ group.course }}</td>
             <td>{{ group.group_size }}</td>
             <td>{{ group.start_date }}</td>
-            <td><a href="{% url 'groups:update' group.id %}">Edit</a></td>
-            <td><a href="{% url 'groups:delete' group.id %}">Delete</a></td>
+            {% if user.is_authenticated %}
+                <td><a href="{% url 'groups:update' group.id %}">Edit</a></td>
+                <td><a href="{% url 'groups:delete' group.id %}">Delete</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </table>

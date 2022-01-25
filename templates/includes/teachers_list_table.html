@@ -6,8 +6,10 @@
         <th>Number of courses</th>
         <th><i class="bi bi-telephone"></i></th>
 <!--        <th>Group</th>-->
-        <th><i class="bi bi-pencil"></i></th>
-        <th><i class="bi bi-trash"></i></th>
+        {% if user.is_authenticated %}
+            <th><i class="bi bi-pencil"></i></th>
+            <th><i class="bi bi-trash"></i></th>
+        {% endif %}
     </tr>
 
     {% for teacher in list_object %}
@@ -20,8 +22,10 @@
 <!--            <td>{% if teacher.group is not None %}-->
 <!--                {{ teacher.group }}-->
 <!--            {% endif %}</td>-->
-            <td><a href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
-            <td><a href="{% url 'teachers:delete' teacher.id %}">Delete</a></td>
+            {% if user.is_authenticated %}
+                <td><a href="{% url 'teachers:update' teacher.id %}">Edit</a></td>
+                <td><a href="{% url 'teachers:delete' teacher.id %}">Delete</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
 </table>
