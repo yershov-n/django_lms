@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -21,12 +22,22 @@ class AccountRegistrationView(CreateView):
 class AccountLoginView(LoginView):
     template_name = 'accounts/login.html'
 
+    # messages.success(request, '')
+
     def get_redirect_url(self):
         next_value = self.request.GET.get('next')
         if next_value:
             return next_value
 
         return reverse('index')
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(self.request, f'User {self.request.user} has success logged in')
+        # messages.info(self.request, f'User {self.request.user} has success logged in')
+        # messages.warning(self.request, f'User {self.request.user} has success logged in')
+        # messages.error(self.request, f'User {self.request.user} has success logged in')
+        return result
 
 
 class AccountLogoutView(LogoutView):

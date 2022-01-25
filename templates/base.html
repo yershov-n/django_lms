@@ -21,9 +21,13 @@
 <!--    </table>-->
 <!--    <br><br>-->
     <div class="container mt-4 pt-5">
+    {% include 'includes/messages.html' %}
         {% block content %}
 
         {% endblock %}
+        {% if is_paginated %}
+            {% include 'includes/paginator.html' %}
+        {% endif %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
             integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
