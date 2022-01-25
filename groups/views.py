@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 from students.models import Students
 
@@ -37,6 +39,7 @@ from .models import Group
 #     )
 
 
+@login_required
 def create_group(request):
 
     if request.method == 'GET':
@@ -79,6 +82,7 @@ def create_group(request):
 #     )
 
 
+@login_required
 def delete_group(request, pk):
     group = get_object_or_404(Group, id=pk)
     if request.method == 'POST':
@@ -100,14 +104,14 @@ class GroupListView(ListView):
         return filter_groups
 
 
-class GroupCreateView(CreateView):
+class GroupCreateView(LoginRequiredMixin, CreateView):
     model = Group
     form_class = GroupCreateForm
     success_url = reverse_lazy('groups:list')
     template_name = 'groups/create.html'
 
 
-class GroupUpdateView(UpdateView):
+class GroupUpdateView(LoginRequiredMixin, UpdateView):
     model = Group
     form_class = GroupUpdateForm
     success_url = reverse_lazy('groups:list')
@@ -139,7 +143,7 @@ class GroupUpdateView(UpdateView):
         return response
 
 
-class GroupDeleteView(DeleteView):
+class GroupDeleteView(LoginRequiredMixin, DeleteView):
     model = Group
     success_url = reverse_lazy('groups:list')
     template_name = 'groups/delete.html'

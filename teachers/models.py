@@ -19,10 +19,10 @@ class Teacher(Person):
     phone_number = models.CharField(
         max_length=20,
         default='',
-        validators=[
-            MinLengthValidator(7),
-            unique_number_validator
-        ]
+        # validators=[
+        #     MinLengthValidator(7),
+        #     unique_number_validator
+        # ]
     )
     salary = models.PositiveIntegerField(default=1500)
     group = models.ForeignKey(
