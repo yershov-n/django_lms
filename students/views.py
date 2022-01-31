@@ -1,4 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect  # noqa
 from django.shortcuts import get_object_or_404  # noqa
@@ -166,6 +168,11 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
 
     pk_url_kwarg = 'ppk'
 
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.success(self.request, f'Student {self.get_object()} was successfully updated')
+        return result
+
 
 class StudentsListView(ListView):
     paginate_by = 10
@@ -193,9 +200,15 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('students:list')
     template_name = 'students/delete.html'
 
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, f'Student {self.get_object()} was successfully deleted')
+        result = super().delete(self, request)
+        return result
 
-class StudentCreateView(LoginRequiredMixin, CreateView):
+
+class StudentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Students
     form_class = StudentCreateForm
     success_url = reverse_lazy('students:list')
     template_name = 'students/create.html'
+    success_message = 'Student %(first_name) has successfully created'
